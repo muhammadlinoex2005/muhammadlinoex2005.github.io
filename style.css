@@ -1,0 +1,639 @@
+/*
+ * style.css
+ * Main stylesheet for the portfolio website.
+ */
+
+/* ------------------- */
+/* 1. Global Styles & Variables */
+/* ------------------- */
+
+:root {
+    --primary-color: #6a0dad; /* A nice, deep purple */
+    --primary-color-light: #7b1fa2;
+    --secondary-color: #f3e5f5; /* A very light purple for backgrounds */
+    --text-color: #333;
+    --background-color: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition-speed: 300ms;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Offset for sticky nav */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+a:hover {
+    color: var(--primary-color-light);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.section {
+    /* MODIFIED: Drastically reduced top and bottom padding */
+    padding: 1.5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    /* MODIFIED: Drastically reduced bottom margin */
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* ------------------- */
+/* 2. Navbar */
+/* ------------------- */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    height: 70px;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    font-weight: 600;
+    color: var(--text-color);
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width var(--transition-speed) ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Navbar Scroll Animation */
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    backdrop-filter: blur(5px);
+}
+
+.header.scrolled .nav-logo,
+.header.scrolled .nav-link {
+    color: var(--text-color);
+}
+
+
+/* ------------------- */
+/* 3. Scroll-in Animation */
+/* ------------------- */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Accessibility: Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-section, .cert-card, .project-card, .modal, 
+  .about-text-content, .about-image-content { /* Added hero elements */
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ------------------- */
+/* 4. About / Hero Section */
+/* ------------------- */
+.about-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 2rem;
+    min-height: 100vh;
+    padding-top: 70px;
+    /* Reset the section padding for the hero section specifically */
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.about-text-content {
+    padding-right: 2rem;
+    animation: slideInLeft 1s ease-out forwards;
+}
+
+.hero-subheading {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-color);
+}
+
+.hero-heading {
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0.5rem 0 1.5rem 0;
+    letter-spacing: -2px;
+}
+
+.hero-heading .text-purple {
+    color: var(--primary-color);
+}
+
+.bio {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 500px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: all var(--transition-speed) ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--text-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #555;
+    transform: translateY(-3px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    color: var(--primary-color);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    color: var(--text-color);
+    transition: all var(--transition-speed) ease;
+}
+
+.social-icon:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.about-image-content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    animation: slideInRight 1s ease-out forwards;
+}
+
+.profile-photo {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    object-fit: contain;
+    object-position: bottom right;
+}
+
+/* ------------------- */
+/* 4a. Hero Animation */
+/* ------------------- */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive adjustments for the hero section */
+@media (max-width: 992px) {
+    .about-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .about-image-content {
+        grid-row: 1;
+        max-height: 50vh;
+        margin-bottom: 2rem;
+    }
+    .about-text-content {
+        padding-right: 0;
+    }
+    .hero-heading {
+        font-size: 3.5rem;
+    }
+    .bio {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hero-buttons, .social-links {
+        justify-content: center;
+    }
+}
+
+
+/* ------------------- */
+/* 5. Certifications Section */
+/* ------------------- */
+
+.section-subtitle {
+    text-align: center;
+    /* MODIFIED: Adjusted margins to bring closer to title */
+    margin-top: 0rem;
+    margin-bottom: 1.5rem;
+    color: #666;
+}
+
+.main-cert-container {
+    display: flex;
+    justify-content: center;
+    /* MODIFIED: Reduced margin */
+    margin-bottom: 1.5rem;
+}
+
+.cert-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem 0; /* Reduced padding */
+}
+
+.cert-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px; 
+}
+
+.cert-card {
+    width: 220px;
+    height: 155px;
+    position: relative;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1;
+}
+
+.cert-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#main-cert-item .cert-card {
+    width: 250px;
+    height: 350px;
+}
+
+#main-cert-item .cert-card img {
+    object-fit: contain;
+}
+
+.cert-item:hover .cert-card {
+    z-index: 10;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+}
+
+.cert-item:not(#main-cert-item):hover .cert-card img {
+    transform: scale(2.2);
+}
+
+#main-cert-item:hover .cert-card {
+    transform: scale(1.5);
+}
+
+.cert-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-top: 1rem;
+    text-align: center;
+    max-width: 220px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.cert-item:hover .cert-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ------------------- */
+/* 6. Experience Section */
+/* ------------------- */
+.experience-item {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border-left: 5px solid var(--primary-color);
+}
+
+.company-logo {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.experience-details h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.company-name {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+/* ------------------- */
+/* 7. Projects Section */
+/* ------------------- */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(106, 2, 173, 0.2);
+}
+
+.project-card img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.project-info {
+    padding: 1.5rem;
+}
+
+.project-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* ------------------- */
+/* 8. Side Projects / Skills */
+/* ------------------- */
+.skills-list {
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.skills-list li {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* ------------------- */
+/* 9. Footer */
+/* ------------------- */
+.footer {
+    text-align: center;
+    /* MODIFIED: Reduced padding */
+    padding: 2.5rem 2rem;
+    background-color: var(--text-color);
+    color: var(--background-color);
+}
+
+.footer .btn {
+    margin-bottom: 2rem;
+}
+
+.footer .btn:hover {
+    background-color: var(--primary-color-light);
+    transform: scale(1.05);
+    color: white;
+}
+
+/* ------------------- */
+/* 10. Modal */
+/* ------------------- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    max-width: 900px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: scale(0.9);
+    transition: transform var(--transition-speed) ease;
+    
+    /* MODIFIED: Added max-height and overflow to prevent cutoff */
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.modal-overlay.active .modal {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #aaa;
+    transition: color var(--transition-speed) ease;
+}
+
+.modal-close:hover {
+    color: var(--text-color);
+}
+
+.modal img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+}
+
+.modal h3 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.modal-links {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+/* ------------------- */
+/* 11. Responsive Design */
+/* ------------------- */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none; 
+    }
+
+    .section {
+        /* Further reduce padding on mobile for a tighter feel */
+        padding: 1.5rem 1rem;
+    }
+
+    .about-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .experience-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
